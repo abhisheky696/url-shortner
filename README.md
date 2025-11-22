@@ -5,7 +5,7 @@ A modern URL shortening web application built with **React**, **Node.js**, **Exp
 ---
 ## Live Demo
 
-Check out the live application here: [URL Shortener Web App](http://localhost:5173/)  
+Check out the live application here: [URL Shortener Web App](https://url-shortner-plum-five.vercel.app/)  
 
 ## Features
 
@@ -126,6 +126,5 @@ The app will be running at [http://localhost:3000](http://localhost:3000)
 ## Future Enhancements
 
 * User authentication for personal links
-* Custom short URLs
 * Expiration dates for short links
 * Real-time analytics dashboard
