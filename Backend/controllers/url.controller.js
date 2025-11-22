@@ -8,33 +8,49 @@ export const testing = (req, res) => {
   });
 };
 
-export const getAllLinks =  async (req,res) => {
+export const getAllLinks = async (req, res) => {
   try {
-    const allLinks=await Url.find({});
+    const allLinks = await Url.find({});
     res.status(200).send({
-      sucess:true,
-      message:"links fetched successfully",
-      data:allLinks
+      sucess: true,
+      message: "links fetched successfully",
+      data: allLinks
     })
   } catch (error) {
     console.log("some error occured while fetching all the links")
     res.status(400).send({
-      success:false,
-      message:"some error occured while fetching all the links"
+      success: false,
+      message: "some error occured while fetching all the links"
     })
   }
 }
 
 export const getUniqueCode = async (req, res) => {
   try {
-    const { redirectUrl } = req.body;
+    const { redirectUrl, customCode } = req.body;
+    if (customCode) {
+      const check = await Url.findOne({ uniqueCode: customCode })
+      if(check) {
+        return res.status(400).send({
+          success: false,
+          message: "Please enter different Custom code, it is already taken!!"
+        })
+      }
+    }
 
-    if (!redirectUrl)
+    if (!redirectUrl) {
       return res.status(400).send({
         success: false,
         message: "redirectUrl is required",
       });
-    const uniqueCode = nanoid(8);
+    }
+    let uniqueCode;
+    if(customCode) {
+      uniqueCode = customCode;
+    } 
+    else {
+      uniqueCode=nanoid(8);
+    }
     const result = await Url.create({
       uniqueCode,
       redirectUrl,
@@ -50,7 +66,6 @@ export const getUniqueCode = async (req, res) => {
     });
   } catch (error) {
     console.error("error while shorten the url:", error.message);
-
     res.status(500).send({
       success: false,
       message: "some error occured while shorten the url",
