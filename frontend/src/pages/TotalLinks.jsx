@@ -15,7 +15,7 @@ const TotalLinks = () => {
       setError('');
       try {
         const res = await axios.get(`${BASE_URL}/getAllLinks`);
-        console.log(res.data.data)    
+        // console.log(res.data.data)    
         setLinks(res.data.data)    
       } catch (err) {
         setError('Failed to fetch links');
